@@ -31,13 +31,13 @@ FROM eclipse-temurin:23-jdk
 WORKDIR /app
 
 # Copy compiled jar from first container (builder) and rename to preferred name
-COPY --from=builder /compileDir/target/day18-0.0.1-SNAPSHOT.jar day18.jar
+COPY --from=builder /compileDir/target/day19-0.0.1-SNAPSHOT.jar day19.jar
 
-ENV SERVER_PORT=1234
+ENV SERVER_PORT=3000
 
 EXPOSE ${SERVER_PORT}
 
-ENTRYPOINT java -jar day18.jar
+ENTRYPOINT java -jar day19.jar
 
 HEALTHCHECK --interval=30s --timeout=30s --retries=3 \
 CMD curl -s -f http://localhost:${SERVER_PORT}/healthy || exit 1
