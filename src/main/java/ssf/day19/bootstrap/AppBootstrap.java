@@ -20,8 +20,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
-import jakarta.json.JsonValue;
-import ssf.day19.models.Task;
+import ssf.day19.config.Constants;
 
 @Component
 public class AppBootstrap implements CommandLineRunner {
@@ -29,11 +28,9 @@ public class AppBootstrap implements CommandLineRunner {
     @Value("classpath:static/main/todos.json")
     private Resource todoFile;
 
-    @Autowired @Qualifier("redis-0")
+    @Autowired @Qualifier(Constants.REDIS_TEMPLATE_01)
     private RedisTemplate<String, String> template;
 
-    public static final String TODO_KEY = "TASKS";
-    
     @Override
     public void run(String... args) throws ParseException {
         StringBuilder sbJson = new StringBuilder();
@@ -64,7 +61,7 @@ public class AppBootstrap implements CommandLineRunner {
             JsonObjectBuilder job = Json.createObjectBuilder(j);
             
             // Convert from String -> Date -> Long epoch ms
-            SimpleDateFormat sdf = new SimpleDateFormat(Task.DATE_FORMAT);
+            SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
             Long epochDateTime = sdf.parse(j.getString("due_date")).getTime();
 
             // Replace j.due_date
@@ -80,7 +77,7 @@ public class AppBootstrap implements CommandLineRunner {
             
             JsonObject jUpdated = job.build();
             
-            template.opsForHash().put(TODO_KEY, jUpdated.getString("id"), jUpdated.toString());
+            template.opsForHash().put(Constants.REDIS_KEY_TODO, jUpdated.getString("id"), jUpdated.toString());
         }
     }
 }

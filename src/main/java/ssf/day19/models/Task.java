@@ -1,11 +1,9 @@
 package ssf.day19.models;
 
 import java.io.StringReader;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -29,7 +27,7 @@ public class Task {
     private Date createdAt; // Date of creation (to be stored as epoch ms in Redis)
     private Date updatedAt; // Updated Date each time record is updated (to be stored as epoch ms in Redis)
 
-    public static final String DATE_FORMAT = "EEE, MM/dd/yyyy";
+    
 
     public Task() {
     }
