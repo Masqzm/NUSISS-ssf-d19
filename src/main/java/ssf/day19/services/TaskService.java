@@ -1,6 +1,8 @@
 package ssf.day19.services;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +40,19 @@ public class TaskService {
             default:
                 return tasksList;
         }
+    }
+
+    public void addTask(Task task) {
+        // Generate random ID & current timestamp
+        String id = UUID.randomUUID().toString();
+        Date date = new Date();
+
+        // Update task with generated variables
+        task.setId(id);
+        task.setCreatedAt(date);
+        task.setUpdatedAt(date);
+
+        // Save task
+        taskRepo.addTask(task);
     }    
 }

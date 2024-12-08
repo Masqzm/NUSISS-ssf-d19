@@ -65,15 +65,15 @@ public class AppBootstrap implements CommandLineRunner {
             Long epochDateTime = sdf.parse(j.getString("due_date")).getTime();
 
             // Replace j.due_date
-            job.add("due_date", String.valueOf(epochDateTime));
+            job.add("due_date", epochDateTime);
             
             // Replace j.created_at
             epochDateTime = sdf.parse(j.getString("created_at")).getTime();
-            job.add("created_at", String.valueOf(epochDateTime));
+            job.add("created_at", epochDateTime);
             
             // Replace j.updated_at
             epochDateTime = sdf.parse(j.getString("updated_at")).getTime();
-            job.add("updated_at", String.valueOf(epochDateTime));
+            job.add("updated_at", epochDateTime);
             
             JsonObject jUpdated = job.build();
             

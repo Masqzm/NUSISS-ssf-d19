@@ -33,4 +33,8 @@ public class TaskRepo {
 
         return tasksList;
     }
+
+    public void addTask(Task task) {
+        template.opsForHash().put(Constants.REDIS_KEY_TODO, task.getId(), task.toJson());
+    }
 }
