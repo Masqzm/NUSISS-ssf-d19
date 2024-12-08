@@ -30,10 +30,15 @@ public class LoginController {
     public ModelAndView postLogin(@ModelAttribute User user, HttpSession sess) {
         ModelAndView mav = new ModelAndView();
 
-        sess.setAttribute(Constants.SESS_ATTR_USER, user);
-
-        mav.setViewName("redirect:/listing");
-
+        // Allow entry if age >= 10
+        if(user.getAge() >= 10) 
+        {
+            sess.setAttribute(Constants.SESS_ATTR_USER, user);
+            mav.setViewName("redirect:/listing");
+        } 
+        else 
+            mav.setViewName("underage");
+        
         return mav;
     }
 }
