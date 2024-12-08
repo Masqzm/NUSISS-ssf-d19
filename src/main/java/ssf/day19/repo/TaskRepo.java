@@ -18,6 +18,7 @@ public class TaskRepo {
     @Autowired @Qualifier(Constants.REDIS_TEMPLATE_01)
     private RedisTemplate<String, String> template;
 
+    // HGETALL TASKS
     public List<Task> getAllTasks() {
         List<Task> tasksList = new ArrayList<>();
 
@@ -34,7 +35,13 @@ public class TaskRepo {
         return tasksList;
     }
 
+    // HSET <task id> {task properties (json str)}
     public void addTask(Task task) {
         template.opsForHash().put(Constants.REDIS_KEY_TODO, task.getId(), task.toJson());
+    }
+
+    // HDEL TASKS <task id>
+    public void deleteTask(String id) {
+        template.opsForHash().delete(Constants.REDIS_KEY_TODO, id);
     }
 }

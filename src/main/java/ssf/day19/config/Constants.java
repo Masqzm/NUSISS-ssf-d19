@@ -12,4 +12,7 @@ public class Constants {
     public static final String STATUS_STARTED = "started";
     public static final String STATUS_INPROGRESS = "in_progress";
     public static final String STATUS_COMPLETED = "completed";
+
+    public static final String SESS_ATTR_USER = "user";
+    public static final String SESS_ATTR_TASK_UPDATE = "taskUpdate";
 }

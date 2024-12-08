@@ -86,9 +86,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task [id=" + id + ", name=" + name + ", description=" + description + ", dueDate=" + dueDate
-                + ", priority=" + priority + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt="
-                + updatedAt + "]";
+        return toJson();
     }
 
     public String getId() {

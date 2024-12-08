@@ -43,16 +43,26 @@ public class TaskService {
     }
 
     public void addTask(Task task) {
-        // Generate random ID & current timestamp
-        String id = UUID.randomUUID().toString();
         Date date = new Date();
 
-        // Update task with generated variables
-        task.setId(id);
-        task.setCreatedAt(date);
+        // if task already has id, it means we are updating it
+        if(task.getId().isBlank())
+        {
+            // Generate random ID & current timestamp
+            String id = UUID.randomUUID().toString();
+            
+            // Add task generated variables
+            task.setId(id);
+            task.setCreatedAt(date);
+        }
+
         task.setUpdatedAt(date);
 
         // Save task
         taskRepo.addTask(task);
+    }
+
+    public void deleteTask(String id) {
+        taskRepo.deleteTask(id);
     }    
 }

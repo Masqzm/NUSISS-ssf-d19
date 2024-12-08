@@ -9,11 +9,11 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body>
-  <h1>To-do List</h1>
+<body class="p-4 m-0 border-0">
+  <h1 class="pt-2 pb-2">To-do List</h1>
 
   <table class="table">
-    <thead>
+    <thead class="table-light">
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Name</th>
@@ -40,9 +40,10 @@
         
         <th scope="col">Created at</th>
         <th scope="col">Updated at</th>
+        <th scope="col" colspan="2" class="text-center">Actions</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="table-group-divider">
       <tr th:each="task : ${tasksList}" th:object="${task}">
         <td th:text="*{id}"></td>
         <td th:text="*{name}"></td>
@@ -52,6 +53,20 @@
         <td th:text="*{status}"></td>
         <td th:text="*{createdAt}"></td>
         <td th:text="*{updatedAt}"></td>
+        
+        <td>
+          <form method="POST" action="/update">
+            <!-- task obj will be stringified thru Task.toString() here -->
+            <input type="hidden" name="taskStr" th:value="${task}">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </td>
+        <td>
+          <form method="POST" action="/delete">
+            <input type="hidden" name="id" th:value="*{id}">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </td>
       </tr>
     </tbody>
   </table>
