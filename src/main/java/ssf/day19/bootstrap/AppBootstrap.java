@@ -28,14 +28,18 @@ public class AppBootstrap implements CommandLineRunner {
     @Value("classpath:static/main/todos.json")
     private Resource todoFile;
 
+    @Value("classpath:static/main/products.json")
+    private Resource productsFile;
+
     @Autowired @Qualifier(Constants.REDIS_TEMPLATE_01)
     private RedisTemplate<String, String> template;
 
     @Override
-    public void run(String... args) throws ParseException {
+    public void run(String... args) {
         StringBuilder sbJson = new StringBuilder();
         String line;
 
+        // Load todos.json -> save as a string -> process and store into redis
         try {
             if (todoFile.exists()) {
                 try(InputStreamReader is = new InputStreamReader(todoFile.getInputStream());
@@ -45,13 +49,55 @@ public class AppBootstrap implements CommandLineRunner {
                         sbJson.append(line).append("\n");
                 }
             } else 
-                System.out.println("Resource not found.");
+                System.out.println("todos.json file not found.");
             
+            processAndSaveTodoFile(sbJson.toString());
         } catch (IOException e) {
+            System.err.println("I/O Error in loading todos.json file");
+            e.printStackTrace();
+        } catch (ParseException e) {
+            System.err.println("Error in parsing todos.json file");
             e.printStackTrace();
         }
 
-        JsonReader reader = Json.createReader(new StringReader(sbJson.toString()));
+        // Reset sb
+        sbJson.setLength(0);
+
+        // Load todos.json -> save as a string -> process and store into redis
+        try {
+            if (productsFile.exists()) {
+                try(InputStreamReader is = new InputStreamReader(productsFile.getInputStream());
+                    BufferedReader br = new BufferedReader(is)) {
+
+                    while ((line = br.readLine()) != null) 
+                        sbJson.append(line).append("\n");
+                }
+            } else 
+                System.out.println("products.json file not found.");
+            
+            processAndSaveProductsFile(sbJson.toString());
+        } catch (IOException e) {
+            System.err.println("I/O Error in loading todos.json file");
+            e.printStackTrace();
+        } catch (ParseException e) {
+            System.err.println("Error in parsing todos.json file");
+            e.printStackTrace();
+        }
+    }
+    
+    private void processAndSaveProductsFile(String json) throws ParseException {
+        JsonReader reader = Json.createReader(new StringReader(json));
+        JsonArray jsonArr = reader.readArray();
+
+        for(int i = 0; i < jsonArr.size(); i++) {
+            JsonObject j = jsonArr.getJsonObject(i);
+
+            template.opsForHash().put(Constants.REDIS_KEY_PRODUCTS, Integer.toString(j.getInt("id")), j.toString());
+        }
+    }
+
+    private void processAndSaveTodoFile(String json) throws ParseException {
+        JsonReader reader = Json.createReader(new StringReader(json));
         JsonArray jsonArr = reader.readArray();
         for(int i = 0; i < jsonArr.size(); i++) {
             JsonObject j = jsonArr.getJsonObject(i);

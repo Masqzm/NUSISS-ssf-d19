@@ -34,10 +34,12 @@ WORKDIR /app
 COPY --from=builder /compileDir/target/day19-0.0.1-SNAPSHOT.jar day19.jar
 
 ENV SERVER_PORT=3000
+ENV SPRING_DATA_REDIS_HOST=localhost
+ENV SPRING_DATA_REDIS_PORT=6379
+ENV SPRING_DATA_REDIS_DATABASE=0
+ENV SPRING_DATA_REDIS_USERNAME=""
+ENV SPRING_DATA_REDIS_PASSWORD=""
 
 EXPOSE ${SERVER_PORT}
 
 ENTRYPOINT java -jar day19.jar
-
-HEALTHCHECK --interval=30s --timeout=30s --retries=3 \
-CMD curl -s -f http://localhost:${SERVER_PORT}/healthy || exit 1

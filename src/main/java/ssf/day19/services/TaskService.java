@@ -46,7 +46,7 @@ public class TaskService {
         Date date = new Date();
 
         // if task already has id, it means we are updating it
-        if(task.getId().isBlank())
+        if(task.getId() == null || task.getId().isBlank())
         {
             // Generate random ID & current timestamp
             String id = UUID.randomUUID().toString();

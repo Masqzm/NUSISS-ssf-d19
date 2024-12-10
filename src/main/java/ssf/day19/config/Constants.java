@@ -4,6 +4,7 @@ public class Constants {
     public static final String REDIS_TEMPLATE_01 = "redis-0";
 
     public static final String REDIS_KEY_TODO = "TASKS";
+    public static final String REDIS_KEY_PRODUCTS = "PRODUCTS";
 
     public static final String DATE_FORMAT = "EEE, MM/dd/yyyy";
 

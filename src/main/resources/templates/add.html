@@ -88,12 +88,6 @@
                 </div>
             </div>
 
-            <!-- if editing task, include and pass back hidden fields -->
-            <!-- <data th:if="${task.id != null and !#strings.isEmpty(task.id)}">
-                <input type="hidden" th:field="*{id}" th:value="*{id}">
-                <input type="hidden" th:field="*{createdAt}" th:value="*{createdAt}">
-            </data> -->
-
             <button type="submit" class="btn btn-success float-end col-sm-12">
                 <span th:text="${task.id != null and !task.id.empty} ? 'Update' : 'Add'"></span>
             </button>

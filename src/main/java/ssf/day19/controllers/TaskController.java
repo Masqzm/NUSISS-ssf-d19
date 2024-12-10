@@ -24,7 +24,6 @@ public class TaskController {
     @Autowired
     TaskService taskSvc;
 
-    // todo: accept query params for status filter, if null, status filter = all
     @GetMapping("/listing")
     public ModelAndView getListing(HttpSession sess) {
         ModelAndView mav = new ModelAndView();
