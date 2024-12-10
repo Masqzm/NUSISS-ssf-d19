@@ -30,9 +30,7 @@ public class Task {
     private Date createdAt; // Date of creation (to be stored as epoch ms in Redis)
     private Date updatedAt; // Updated Date each time record is updated (to be stored as epoch ms in Redis)
 
-    public Task() {
-    }
-
+    public Task() {}
     public Task(String id, String name, String description, Date dueDate, String priority, String status,
             Date createdAt, Date updatedAt) {
         this.id = id;
