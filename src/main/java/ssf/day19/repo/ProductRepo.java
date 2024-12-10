@@ -38,4 +38,13 @@ public class ProductRepo {
 
         return productsList;
     }
+
+    public Product getProdById(String id) {
+        return Product.jsonToProduct(template.opsForHash().get(Constants.REDIS_KEY_PRODUCTS, id).toString());
+    }
+
+    public void updateProduct(Product prod) {
+        template.opsForHash()
+                .put(Constants.REDIS_KEY_PRODUCTS, String.valueOf(prod.getId()), prod.toJson());
+    }
 }

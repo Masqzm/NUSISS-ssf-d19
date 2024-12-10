@@ -16,4 +16,20 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productRepo.getAllProducts();
     }
+
+    public Product buyProdIfAvail(String id) {
+        Product prod = productRepo.getProdById(id);
+
+        // Allow user to buy if there's stock
+        if(prod.getStock() > prod.getBuy())
+        {
+            prod.setBuy(prod.getBuy() + 1);
+
+            productRepo.updateProduct(prod);
+
+            return prod;
+        }
+
+        return null;
+    }
 }

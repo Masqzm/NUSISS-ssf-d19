@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ssf.day19.models.Product;
@@ -25,6 +27,24 @@ public class ProductsController {
 
         mav.addObject("productsList", productsList);
         mav.setViewName("products");
+
+        return mav;
+    }
+
+    @PostMapping("/buy")
+    public ModelAndView postBuyProduct(@RequestParam String id) {
+        ModelAndView mav = new ModelAndView();
+
+        Product prodBought = productSvc.buyProdIfAvail(id);
+
+        // Fail to buy product
+        if(prodBought == null)
+            mav.setViewName("buy-failed");
+        else
+        {
+            mav.addObject("prodBought", prodBought);
+            mav.setViewName("buy-success");
+        }
 
         return mav;
     }
